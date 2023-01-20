@@ -1,0 +1,42 @@
+p {
+    text-align: justify;
+}
+
+#application_banner {
+    background-color: #004d86;
+    color: #ffffff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.card-img-link {
+    height: 14rem;
+    overflow: hidden;
+}
+
+.card-product-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.table p {
+    margin-bottom: 0px;
+}
+
+.previous_button {
+    margin-right: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.next_button {
+    margin-left: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+
+footer {
+    background-color: #2b3035;
+    color: #ffffff;
+}

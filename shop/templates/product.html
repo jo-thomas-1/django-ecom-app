@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block metadescription %}
+    {{ product.description|truncatewords:155 }}
+{% endblock %}
+
+{% block title %}
+    {{ product.name }} - ABC Store
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <nav class="mt-4" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'shop:allProdCat' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ product.category.get_url }}">{{ product.category }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100%">
+        </div>
+        <div class="col-7">
+            <h1>{{ product.name }}</h1>
+            <h3>&#8377; {{ product.price }}</h3>
+
+            <h5 class="mt-4">Product Description</h5>
+            <p class="mb-4">{{ product.description|truncatewords:40 }}</p>
+
+            {% if product.stock <= 0 %}
+                <p class="btn btn-danger">Out of stock</p>
+            {% else %}
+                <a type="button" class="btn btn-primary" href="{% url 'cart:add_cart' product.id %}">Add to cart</a>
+<!--                <div class="btn-group" role="group" aria-label="Add to cart">-->
+<!--                    <a type="button" class="btn btn-primary">-->
+<!--                        <i class="fa-solid fa-minus"></i>-->
+<!--                    </a>-->
+<!--                    <span class="btn btn-outline-primary"><b>4</b></span>-->
+<!--                    <a type="button" class="btn btn-primary">-->
+<!--                        <i class="fa-solid fa-plus"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

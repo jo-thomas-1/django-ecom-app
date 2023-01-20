@@ -1,0 +1,44 @@
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid ms-2 me-2 mt-1">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="col">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'shop:allProdCat' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link {% if request.path|length > 1 %}active{% endif %} dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for link in links %}
+                            <li><a class="dropdown-item {% if request.path == link.get_url %}active{% endif %}" href="{{ link.get_url }}">{{ link.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <form class="d-flex" role="search" method="GET" action="{% url 'search_app:SearchResult' %}">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Search" name="q" aria-label="Search">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <a type="button" class="btn btn-secondary position-relative" href="{% url 'cart:cart_details' %}">
+                    Cart <i class="fa-solid fa-cart-shopping"></i>
+                    {% if item_count > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">{{ item_count }} <span class="visually-hidden">items in cart</span></span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

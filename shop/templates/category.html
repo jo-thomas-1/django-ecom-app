@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to ABC store where you can buy anything you wish for.
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }} - ABC Store
+    {% else %}
+        ABC Store
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row mb-4">
+        {% if category %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+        {% else %}
+            <img src="{% static 'images/banner.png' %}" alt="banner" width="100%">
+        {% endif %}
+    </div>
+    <div class="container mb-4">
+        {% if category %}
+        <div class="row">
+            <h1>{{ category.name }}</h1>
+            <p>{{ category.description }}</p>
+        </div>
+        {% else %}
+        <div class="row">
+            <h1>Our products</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget iaculis ligula. In sollicitudin tempus mi, at porta dolor lacinia eu. Ut malesuada malesuada venenatis. Pellentesque scelerisque, sem vel dictum ultricies, est nisl elementum metus, vitae tincidunt ex nunc nec arcu. Sed fermentum sapien sit amet bibendum condimentum. In non sollicitudin velit. Integer id nulla dolor. Nam non magna vel arcu mattis ullamcorper. Aliquam erat volutpat.</p>
+        </div>
+        {% endif %}
+
+        <div class="row mt-1 g-4">
+            {% for product in products.object_list %}
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <a class="card-img-link" href="{{ product.get_url }}">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" width="100%">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-product-name">{{ product.name }}</h4>
+                        <p class="card-text">&#8377; {{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if products.paginator.num_pages > 1 %}
+        <div class="row mt-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="btn btn-primary previous_button {% if not products.has_previous %}disabled{% endif %}" href="?page={% if products.previous_page_number is not EmptyPage %}{{ products.previous_page_number }}{% endif %}">Previous</a>
+                    </li>
+                    {% for page in products.paginator.page_range %}
+                        <li class="page-item {% if products.number == page %}active{% endif %}">
+                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="btn btn-primary next_button {% if not products.has_next %}disabled{% endif %}" href="?page={% if products.next_page_number is not EmptyPage %}{{ products.next_page_number }}{% endif %}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

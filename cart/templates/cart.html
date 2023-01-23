@@ -37,7 +37,7 @@
                             {% for cart_item in cart_items %}
                                 <tr>
                                     <td>
-                                        <a href="cart_item.product.get_absolute_url">
+                                        <a href="{{ cart_item.product.get_url }}">
                                             <img src="{{ cart_item.product.image.url }}" alt="" width="150px">
                                         </a>
                                     </td>
@@ -82,7 +82,10 @@
                             <td colspan="4">Please review your shopping cart items before proceeding with order payments.</td>
                         </tr>
                         <tr>
-                            <td colspan="4">Your Total: <b>&#8377; {{ total }}</b></td>
+                            <td colspan="3">Your Total: <b>&#8377; {{ total }}</b></td>
+                            <td align="right">
+                                <a type="button" class="btn btn-warning" href="{% url 'shop:allProdCat' %}">Go To Payment</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
